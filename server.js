@@ -20,21 +20,34 @@ var express = require('express'),
               pass: 'xxxx'
           }
       });
+      let mailOptionToMe = {
+          from: '"dong van" <nickyvan194@gmail.com>', // sender address
+          to: 'nickyvan194@gmail.com', // list of receivers
+          subject: req.body.subject, // Subject line
+          text: req.body.body// plain text body
+          // html body
+      }
       let mailOptions = {
-          from: '"dong van" <xxx@gmail.com>', // sender address
+          from: '"dong van" <nickyvan194@gmail.com>', // sender address
           to: req.body.to, // list of receivers
           subject: req.body.subject, // Subject line
           text: req.body.body, // plain text body
-          html: '<b>TEST TEST</b>' // html body
+          html: '<b>Thank for using my service! I reply soon</b>' // html body
       };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              return console.log(error);
-          }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-              res.render('index');
-          });
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message %s sent: %s', info.messageId, info.response);
+            });
+          transporter.sendMail(mailOptionToMe, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message %s sent: %s', info.messageId, info.response);
+                res.render('index');
+            });
       });
     app.listen(port, function(req, res){
       console.log('Server is running at port: ',port);
